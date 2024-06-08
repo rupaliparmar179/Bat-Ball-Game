@@ -1,219 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cricket Game</title>
   <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
- <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
-  <title>Responsive Navigation Bar</title>
 </head>
-<body text="white">
-<div class="home">
-  <div class="navbar">
-    <div class="logo">Your Logo</div>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-    <ul class="menu">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li onclick="toggleSubmenu()"><a >Menu
-        </a> 
-        <ul class="submenu">
-      <li><a href="#">Wafers</a></li>
-      <li><a href="#">Sandwich</a></li>
-      <li><a href="#">Masala Dosa</a></li>
-    </ul>
-      </li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-  
-<header id="home">
-    <div class="image-container">
-      <img src="home2.jpeg" alt="Your Image">
-    </div>
-  <div class="content">
-    <h1>Welcome to Sweet Delights</h1>
-    <p>Indulge in a world of delicious treats!</p>
-  
-   
-  
-    <div class="button-container">
-      <button class="start-button" onclick="startAnimation()">Get Started</button>
-    </div>
-    </div>
-  </header>
+<body>
+  <h1>Bat Ball Stump Game</h1>
 
-      <section id="services">
-        <div class="heading">
-        <h1>Our Services</h1>
-        </div>
-<div id="services-box">
-        <div class="service">
-          <i class="fas fa-birthday-cake"></i> <!-- Font Awesome birthday cake icon -->
-          
-          <h3>Custom Wedding Cakes</h3>
-          <p>Make your special day even sweeter with our beautifully crafted custom wedding cakes.</p>
-        </div>
+  <button class="choice-button" onclick="
+  let computerChoice = generateComputerChoice();
+  let resultMsg = getResult('Bat', computerChoice);
+  showResult('Bat', computerChoice, resultMsg);
+  ">
+    <img src="bat.jpeg" alt="Bat Image" class="choice-image">  
+  </button>
 
-        <div class="service">
-          <i class="fas fa-cupcake"></i> <!-- Font Awesome cupcake icon -->
-          <h3>Assorted Cupcakes</h3>
-          <p>Enjoy a variety of mouthwatering cupcakes in different flavors for every occasion.</p>
-        </div>
+  <button class="choice-button" onclick="
+    computerChoice = generateComputerChoice();
+    resultMsg = getResult('Ball', computerChoice);
+    showResult('Ball', computerChoice, resultMsg);
+  ">
+    <img src="ball.jpeg" alt="Ball Image" class="choice-image">  
+  </button>
 
-        <div class="service">
-          <i class="fas fa-gift"></i> <!-- Font Awesome gift icon -->
-          <h3>Gift Boxes</h3>
-          <p>Surprise your loved ones with our delightful gift boxes filled with an assortment of sweets.</p>
-        </div>
-         <div class="service">
-          <i class="fas fa-birthday-cake"></i> <!-- Font Awesome birthday cake icon -->
-          <h3>Custom Wedding Cakes</h3>
-          <p>Make your special day even sweeter with our beautifully crafted custom wedding cakes.</p>
-        </div>
+  <button class="choice-button" onclick="
+    computerChoice = generateComputerChoice();
+    resultMsg = getResult('Stump', computerChoice);
+    showResult('Stump', computerChoice, resultMsg);
+  ">
+    <img src="stamp.jpeg" alt="Stump Image" class="choice-image">
+  </button>
 
-        <div class="service">
-          <i class="fas fa-cupcake"></i> <!-- Font Awesome cupcake icon -->
-          <h3>Assorted Cupcakes</h3>
-          <p>Enjoy a variety of mouthwatering cupcakes in different flavors for every occasion.</p>
-        </div>
+  <h3 id="user-move"></h3>
+  <h3 id="computer-move"></h3>
+  <h3 id="result"></h3>
+  <h3 id="score"></h3>
 
-        <div class="service">
-          <i class="fas fa-gift"></i> <!-- Font Awesome gift icon -->
-          <h3>Gift Boxes</h3>
-          <p>Surprise your loved ones with our delightful gift boxes filled with an assortment of sweets.</p>
-        </div>
-</div>
-        <!-- Add more services as needed -->
-      </section>
-    
- <section id="menu">
+  <button onclick="localStorage.clear()
+      resetScore();
+  ">Reset</button>
 
-  <div class="menu-item">
-    <img src="menu1.jpeg" alt="Menu Item 2">
-    <div class="menu-description">
-      <h2>Menu Item 1</h2>
-      <p>A delicious description of Menu Item 1.</p>
-    </div>
-  </div>
+  <script>
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+    resetScore(scoreStr);
 
-  <div class="menu-item">
-    <img src="menu2.jpeg" alt="Menu Item 2">
-    <div class="menu-description">
-      <h2>Menu Item 2</h2>
-      <p>A delightful description of Menu Item 2.</p>
-    </div>
-  </div>
-      <div class="menu-item">
-    <img src="menu3.jpeg" alt="Menu Item 1">
-    <div class="menu-description">
-      <h2>Menu Item 1</h2>
-      <p>A delicious description of Menu Item 1.</p>
-    </div>
-      </div>
+    function resetScore(scoreStr) {
+      score = scoreStr ? JSON.parse(scoreStr) : {
+        win: 0,
+        lost: 0,
+        tie: 0,
+      };
 
-  <div class="menu-item">
-    <img src="menu4.jpeg" alt="Menu Item 2">
-    <div class="menu-description">
-      <h2>Menu Item 2</h2>
-      <p>A delightful description of Menu Item 2.</p>
-    </div>
-  </div>
-   <div class="menu-item">
-     <img src="menu5.jpeg" alt="Menu Item 2">
-     <div class="menu-description">
-       <h2>Menu Item 1</h2>
-       <p>A delicious description of Menu Item 1.</p>
-     </div>
-   </div>
-  
-   <div class="menu-item">
-     <img src="menu6.jpeg" alt="Menu Item 2">
-     <div class="menu-description">
-       <h2>Menu Item 2</h2>
-       <p>A delightful description of Menu Item 2.</p>
-     </div>
-   </div>
-   <div class="menu-item">
-     <img src="menu7.jpeg" alt="Menu Item 1">
-     <div class="menu-description">
-       <h2>Menu Item 1</h2>
-       <p>A delicious description of Menu Item 1.</p>
-     </div>
-   </div>
-  
-   <div class="menu-item">
-     <img src="menu8.jpeg" alt="Menu Item 2">
-     <div class="menu-description">
-       <h2>Menu Item 2</h2>
-       <p>A delightful description of Menu Item 2.</p>
-     </div>
-   </div>
-     <div class="menu-item">
-       <img src="menu1.jpeg" alt="Menu Item 2">
-       <div class="menu-description">
-         <h2>Menu Item 1</h2>
-         <p>A delicious description of Menu Item 1.</p>
-       </div>
-     </div>
-   
-     <div class="menu-item">
-       <img src="menu2.jpeg" alt="Menu Item 2">
-       <div class="menu-description">
-         <h2>Menu Item 2</h2>
-         <p>A delightful description of Menu Item 2.</p>
-       </div>
-     </div>
-     <div class="menu-item">
-       <img src="menu3.jpeg" alt="Menu Item 1">
-       <div class="menu-description">
-         <h2>Menu Item 1</h2>
-         <p>A delicious description of Menu Item 1.</p>
-       </div>
-     </div>
-   
-     <div class="menu-item">
-       <img src="menu4.jpeg" alt="Menu Item 2">
-       <div class="menu-description">
-         <h2>Menu Item 2</h2>
-         <p>A delightful description of Menu Item 2.</p>
-       </div>
-     </div>
-     <div class="menu-item">
-       <img src="menu5.jpeg" alt="Menu Item 2">
-       <div class="menu-description">
-         <h2>Menu Item 1</h2>
-         <p>A delicious description of Menu Item 1.</p>
-       </div>
-     </div>
-   
-     <div class="menu-item">
-       <img src="menu6.jpeg" alt="Menu Item 2">
-       <div class="menu-description">
-         <h2>Menu Item 2</h2>
-         <p>A delightful description of Menu Item 2.</p>
-       </div>
-     </div>
-     <div class="menu-item">
-       <img src="menu7.jpeg" alt="Menu Item 1">
-       <div class="menu-description">
-         <h2>Menu Item 1</h2>
-         <p>A delicious description of Menu Item 1.</p>
-       </div>
-     </div>
-   
-     <div class="menu-item">
-       <img src="menu8.jpeg" alt="Menu Item 2">
-       <div class="menu-description">
-         <h2>Menu Item 2</h2>
-         <p>A delightful description of Menu Item 2.</p>
-       </div>
-     </div>
-  </div></section>
-  <script src="main.js"></script>
+      score.displayScore = function() {
+        return `Score:Won:${score.win}, Lost:${score.lost}, Tie: ${score.tie}`;
+      };
+
+      showResult();
+    }
+
+    function generateComputerChoice() {
+      //This will generate random number between 0 and 3
+      let randomNumber = Math.random() * 3;
+      if (randomNumber > 0 && randomNumber <= 1) {
+        return 'Bat';
+      } else if (randomNumber > 1 && randomNumber <= 2) {
+        return 'Ball';
+      } else {
+        return 'Stump'
+      }
+    }
+
+    function getResult(userMove, computerMove) {
+      if (userMove === 'Bat') {
+        if (computerMove === 'Ball') {
+          score.win++;
+          return 'User won.';
+        } else if (computerMove === 'Bat') {
+          score.tie++;
+          return `It's a tie`;
+        } else if (computerMove === 'Stump') {
+          score.lost++;
+          return 'Computer has won';
+        }
+      } else if (userMove === 'Ball') {
+        if (computerMove === 'Ball') {
+          score.tie++;
+          return `It's a tie`;
+        } else if (computerMove === 'Bat') {
+          score.lost++;
+          return 'Computer has won';
+        } else if (computerMove === 'Stump') {
+          score.win++;
+          return 'User won.';
+        }
+      } else {
+        if (computerMove === 'Ball') {
+          score.lost++;
+          return 'Computer has won';
+        } else if (computerMove === 'Bat') {
+          score.win++;
+          return 'User won.';
+        } else if (computerMove === 'Stump') {
+          score.tie++;
+          return `It's a tie`;
+        }
+      }
+    }
+
+    function showResult(userMove, computerMove, result) {
+      localStorage.setItem('Score', JSON.stringify(score));
+
+      document.querySelector('#user-move').innerText = 
+        userMove ? `You have chosen ${userMove}` : '';
+
+      document.querySelector('#computer-move').innerText =
+        computerMove ? `Computer choice is ${computerMove}` : '';
+
+      document.querySelector('#result').innerText = result || '';
+
+      document.querySelector('#score').innerText = score.displayScore();
+    }
+  </script>
 </body>
 </html>
